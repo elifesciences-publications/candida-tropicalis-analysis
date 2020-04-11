@@ -8,11 +8,11 @@ This script plots the 3C profile anchored on a specified genomic bin.
 The hdf5 file of chromosome-wide contact probability matrices.
 
 <Usage>
-python 02_3C_profile_plotting.py [-h] --chromosomeHDF5 CHROMOSOMEHDF5
-                                 --anchorChromosome ANCHORCHROMOSOME --anchor
-                                 ANCHOR [--regionChromosome REGIONCHROMOSOME]
-                                 [--regionStart REGIONSTART]
-                                 [--regionEnd REGIONEND] [--ymax YMAX]
+python 3C_profile_plotting.py [-h] --chromosomeHDF5 CHROMOSOMEHDF5
+                              --anchorChromosome ANCHORCHROMOSOME --anchor
+                              ANCHOR [--regionChromosome REGIONCHROMOSOME]
+                              [--regionStart REGIONSTART]
+                              [--regionEnd REGIONEND] [--ymax YMAX]
 
 <Examples>
 1) Plotting the 3C profile of a bin (chr1: 10000-19999) on the entire chromosome

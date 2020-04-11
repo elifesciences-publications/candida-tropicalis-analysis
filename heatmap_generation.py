@@ -8,13 +8,11 @@ This script generates a Hi-C/3C-seq contact heatmap from the genome-wide/chromos
 The hdf5 file of genome-wide and/or chromosome-wide contact probability matrices.
 
 <Usage>
-python 01_heatmap_generation.py [-h] [--genomeHDF5 GENOMEHDF5]
-                                [--chromosomeHDF5 CHROMOSOMEHDF5]
-                                [--plotGenome]
-                                [--plotChromosome PLOTCHROMOSOME [PLOTCHROMOSOME ...]]
-                                [--colorMap COLORMAP] [--vmin VMIN]
-                                [--vmax VMAX]
-                                [--chromosomeGrid CHROMOSOMEGRID]
+python heatmap_generation.py [-h] [--genomeHDF5 GENOMEHDF5]
+                             [--chromosomeHDF5 CHROMOSOMEHDF5] [--plotGenome]
+                             [--plotChromosome PLOTCHROMOSOME [PLOTCHROMOSOME ...]]
+                             [--colorMap COLORMAP] [--vmin VMIN] [--vmax VMAX]
+                             [--chromosomeGrid CHROMOSOMEGRID]
 
 <Examples>
 1) Plotting a genome-wide heatmap
