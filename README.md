@@ -1,20 +1,17 @@
 # Analysis of _Candida tropicalis_ 3C-seq data
 This repository includes codes used for analyzing 3C-seq data of _Candida tropicalis_ type strain MYA-3404. Manuscript available at https://www.biorxiv.org/content/10.1101/2020.02.07.938175v1.
-
-**Dependencies**
+### Dependencies
 To use the codes in this repository, the following Python libraries and their respective dependencies are required.
 - numpy
 - matplotlib
 - mirnylib
 - hiclib
-
-**Dowload**
+### Dowload
 ```
 git clone https://github.com/Yao-Chen/candida-tropicalis-analysis.git
 cd candida-tropicalis-analysis
 ```
-
-**Input data**
+### Input data
 All the codes are based on the matrix HDF5 files exported using `hiclib.binnedData.export`.
 
 Prior to the matrix export, data processing by `hiclib` package, including iterative mapping of Hi-C/3C-seq raw reads, fragment assignment and filtering, binning and bin-level filtering and iterative bias correction, are recommended.
