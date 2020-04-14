@@ -3,6 +3,7 @@ This repository includes codes used for analyzing 3C-seq data of _Candida tropic
 ### Dependencies
 To use these scripts, the following Python libraries and their respective dependencies are required.
 - numpy
+- scipy
 - matplotlib
 - mirnylib
 - hiclib
