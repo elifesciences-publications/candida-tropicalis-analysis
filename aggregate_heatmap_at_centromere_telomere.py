@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-"""
+'''
 <Description>
 This script performs aggregate signal analysis of contact probability matrix and generates the heatmap of mean contact probabilities surrounding all centromere-centromere or telomere-telomere interactions.
 
@@ -37,7 +37,7 @@ $ python aggregate_heatmap_at_centromere_telomere.py --chromosomeHDF5 ../test_ma
 
 <Output>
 Heatmap of mean contact probabilities surrounding all centromere-centromere or telomere-telomere interactions in PNG format.
-"""
+'''
 
 import sys
 import argparse
@@ -65,7 +65,7 @@ def parseInput():
 	parser.add_argument('--chromosomeHDF5', dest = 'chromosomeHDF5', required = True, help = 'Input HDF5 file of chromosome-wide contact probability matrices. [Required]')
 	parser.add_argument('--plotTelomere', dest = 'plotTelomere', type = int, default = 0, help = 'Number of base pairs plotted from the chromosome end (telomere). [Optional]')
 	parser.add_argument('--plotCentromere', dest = 'plotCentromere', type = int, default = 0, help = 'Number of base pairs plotted from each side of centromere mid bin (e.g. use "--plotCentromere 50000" to plot a region containing 50000 bp upstream region, centromere mid bin and 50000 bp downstream region). [Optional]')
-	parser.add_argument('--centromereBed', dest = 'centromereBed', default = None, help = "BED file containing start and end coordinates of centromere for each chromosome. Format of columns (separated by tabs): Chromosome, Start, End. [Required if --plotCentromere is specified]")
+	parser.add_argument('--centromereBed', dest = 'centromereBed', default = None, help = 'BED file containing start and end coordinates of centromere for each chromosome. Format of columns (separated by tabs): Chromosome, Start, End. [Required if --plotCentromere is specified]')
 	parser.add_argument('--colorMap', dest = 'colorMap', default = 'hot_r', help = 'Built-in colormaps in Matplotlib package (https://matplotlib.org/3.1.1/gallery/color/colormap_reference.html) [Optional; Default = hot_r]')
 	parser.add_argument('--vmin', dest = 'vmin', type = float, default = None, help = 'minimum value of color scale. [Optional; Default = None]')
 	parser.add_argument('--vmax', dest = 'vmax', type = float, default = None, help = 'maximum value of color scale. [Optional; Default = None]')
@@ -87,17 +87,17 @@ def parseInput():
 	
 	# Check arguments
 	if CENTROMERE_BED == None and PLOT_CENTROMERE:
-		print "[Error] --centromereBed is required when --plotCentromere is specified."
+		print '[Error] --centromereBed is required when --plotCentromere is specified.'
 		sys.exit(1)
 
 	# Name output figure
-	tmp = "_" + COLORMAP
+	tmp = '_' + COLORMAP
 	if VMIN != None:
-		tmp += "_vmin" + str(VMIN)
+		tmp += '_vmin' + str(VMIN)
 	if VMAX != None:
-		tmp += "_vmax" + str(VMAX)
-	FIGURE_CENTROMERE = CHROMOSOME_HDF5.split("/")[-1][:-5] + "_aggregate_signal_centromere" + str(PLOT_CENTROMERE*2+1) + tmp + ".png"
-	FIGURE_TELOMERE = CHROMOSOME_HDF5.split("/")[-1][:-5] + "_aggregate_signal_telomere" + str(PLOT_TELOMERE) + tmp + ".png"
+		tmp += '_vmax' + str(VMAX)
+	FIGURE_CENTROMERE = CHROMOSOME_HDF5.split('/')[-1][:-5] + '_aggregate_signal_centromere' + str(PLOT_CENTROMERE*2+1) + tmp + '.png'
+	FIGURE_TELOMERE = CHROMOSOME_HDF5.split('/')[-1][:-5] + '_aggregate_signal_telomere' + str(PLOT_TELOMERE) + tmp + '.png'
 
 	# Return
 	return CHROMOSOME_HDF5, PLOT_TELOMERE, PLOT_CENTROMERE, CENTROMERE_BED, COLORMAP, VMIN, VMAX, FIGURE_CENTROMERE, FIGURE_TELOMERE
@@ -105,9 +105,9 @@ def parseInput():
 # Read hdf5 file
 def readDict(CHROMOSOME_HDF5):
 	# Read file
-	f = h5dict.h5dict(CHROMOSOME_HDF5, mode="r")
-	resolution = f["resolution"]
-	genomeIdxToLabel = f["genomeIdxToLabel"]
+	f = h5dict.h5dict(CHROMOSOME_HDF5, mode='r')
+	resolution = f['resolution']
+	genomeIdxToLabel = f['genomeIdxToLabel']
 	
 	# Return
 	return f, resolution, genomeIdxToLabel
@@ -125,7 +125,7 @@ def aggregateSignalCentromere(f, resolution, genomeIdxToLabel, PLOT_CENTROMERE, 
         	for chrm2 in range(chrm1 + 1, len(genomeIdxToLabel)):
                 	cen1 = cens[genomeIdxToLabel[chrm1]]
                 	cen2 = cens[genomeIdxToLabel[chrm2]]
-                	key = str(chrm1) + " " + str(chrm2)
+                	key = str(chrm1) + ' ' + str(chrm2)
                 	agg += f[key][cen1 - N : cen1 + 1 + N, cen2 - N : cen2 + 1 + N]
                 	count += 1
 	agg /= count
@@ -139,10 +139,10 @@ def _getCentromereCenter(CENTROMERE_BED, resolution):
 	cens = {}
 
 	# Read BED file of centromere locations
-	with open(CENTROMERE_BED, "r") as f:
+	with open(CENTROMERE_BED, 'r') as f:
 	        for l in f:
-        	        if not l.strip().startswith("#"):
-                	        tmp = l.strip().split("\t")
+        	        if not l.strip().startswith('#'):
+                	        tmp = l.strip().split('\t')
                         	chrmLabel = tmp[0][3:]
                         	center = (int(tmp[1]) + int(tmp[2])) / 2
                         	cens[chrmLabel] = center / resolution
@@ -157,7 +157,7 @@ def aggregateSignalTelomere(f, resolution, genomeIdxToLabel, PLOT_TELOMERE):
 	count = 0
 	for l in genomeIdxToLabel:
         	for r in genomeIdxToLabel:
-        	        key = str(l) + " " + str(r)
+        	        key = str(l) + ' ' + str(r)
                 	agg += f[key][:N, -N:]
                 	count += 1
 	agg /= count
@@ -171,18 +171,18 @@ def aggregateSignalTelomere(f, resolution, genomeIdxToLabel, PLOT_TELOMERE):
 def plotHeatmap(agg, FIGURE, COLORMAP, VMIN, VMAX, mode):
 	# Plot heatmap
 	im = plt.imshow(np.log2(agg), cmap = COLORMAP, vmin = VMIN, vmax = VMAX)
-	plt.colorbar(im, label = "Contact probability (log2)")
+	plt.colorbar(im, label = 'Contact probability (log2)')
 
 	# Set tick labels
 	if mode == 0:
 		ticks = [len(agg) / 2]
-		ticklabels = ["Centromere"]
-		plt.xticks(ticks, ticklabels, ha = "center")
-		plt.yticks(ticks, ticklabels, rotation = 90, va = "center")
+		ticklabels = ['Centromere']
+		plt.xticks(ticks, ticklabels, ha = 'center')
+		plt.yticks(ticks, ticklabels, rotation = 90, va = 'center')
 	elif mode == 1:
-		ticklabels = ["Telomere"]
-		plt.xticks([len(agg) - 1], ticklabels, ha = "right")
-		plt.yticks([0], ticklabels, rotation = 90, va = "top")
+		ticklabels = ['Telomere']
+		plt.xticks([len(agg) - 1], ticklabels, ha = 'right')
+		plt.yticks([0], ticklabels, rotation = 90, va = 'top')
 
 	# Set label location
 	plt.gca().xaxis.set_tick_params(label1On = False, label2On = True, tick1On = False, tick2On = True)
@@ -193,5 +193,5 @@ def plotHeatmap(agg, FIGURE, COLORMAP, VMIN, VMAX, mode):
 	plt.close()
 
 # Execute main function
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()

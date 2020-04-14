@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-"""
+'''
 <Description>
 This script plots the 3C profile anchored on a specified genomic bin.
 
@@ -32,7 +32,7 @@ Prob_byChr.hdf5 --anchorChromosome 1 --anchor 10000 --regionChromosome 2 --regio
 
 <Output>
 Plot of 3C profile in PNG format.
-"""
+'''
 
 import sys
 import argparse
@@ -83,9 +83,9 @@ def parseInput():
 def get3CProfile(CHROMOSOME_HDF5, ANCHOR_CHROMOSOME, ANCHOR, REGION_CHROMOSOME, REGION_START, REGION_END):
 	# Read hdf5
 	f = h5dict.h5dict(CHROMOSOME_HDF5, mode='r')
-	genomeIdxToLabel = f["genomeIdxToLabel"]
-	chromosomeStarts = f["chromosomeStarts"]
-        binNumber = f["binNumber"]
+	genomeIdxToLabel = f['genomeIdxToLabel']
+	chromosomeStarts = f['chromosomeStarts']
+        binNumber = f['binNumber']
 
 	# Get chromosome information
 	for i in range(len(genomeIdxToLabel)):
@@ -98,7 +98,7 @@ def get3CProfile(CHROMOSOME_HDF5, ANCHOR_CHROMOSOME, ANCHOR, REGION_CHROMOSOME, 
 			region_chrmLen = _getChrmLen(i, chromosomeStarts, binNumber)
 	
 	# Convert coordinates to bin numbers
-	resolution = f["resolution"]
+	resolution = f['resolution']
 	anchorBin = ANCHOR / resolution
 	if REGION_START != None:
 		regionStartBin = REGION_START / resolution
@@ -111,22 +111,22 @@ def get3CProfile(CHROMOSOME_HDF5, ANCHOR_CHROMOSOME, ANCHOR, REGION_CHROMOSOME, 
 
 	# Check bin numbers
 	if anchorBin > anchor_chrmLen:
-		print "[Error] Anchor coordinate (%s) exceeds chromosome length (%s)." % (ANCHOR, anchor_chrmLen * resolution)
+		print '[Error] Anchor coordinate (%s) exceeds chromosome length (%s).' % (ANCHOR, anchor_chrmLen * resolution)
 		sys.exit(1)
 	if regionEndBin < regionStartBin:
-		print "[Error] Region start (%s) is larger than region end (%s)." % (regionStartBin * resolution, regionEndBin * resolution)
+		print '[Error] Region start (%s) is larger than region end (%s).' % (regionStartBin * resolution, regionEndBin * resolution)
 		sys.exit(1)
 	if regionEndBin > region_chrmLen:
-		print "[Error] Region (%s-%s) exceed chromosome length (%s)." % (regionStartBin * resolution, regionEndBin * resolution, region_chrmLen * resolution)
+		print '[Error] Region (%s-%s) exceed chromosome length (%s).' % (regionStartBin * resolution, regionEndBin * resolution, region_chrmLen * resolution)
 		esys.exit(1)
 
 	# Get matrix
-	key = str(anchor_chrmIdx) + " " + str(region_chrmIdx)
+	key = str(anchor_chrmIdx) + ' ' + str(region_chrmIdx)
 	matrix = f[key]
 	matrix = matrix[anchorBin,regionStartBin:regionEndBin]
 
 	# Name output figure
-	FIGURE = CHROMOSOME_HDF5.split("/")[-1][:-5] + "_anchor_chr" + ANCHOR_CHROMOSOME + "_" + str(anchorBin * resolution) + "-" + str((anchorBin + 1) * resolution - 1) + "_region_chr" + REGION_CHROMOSOME + "_" + str(regionStartBin * resolution) + "-" + str(regionEndBin * resolution - 1)
+	FIGURE = CHROMOSOME_HDF5.split('/')[-1][:-5] + '_anchor_chr' + ANCHOR_CHROMOSOME + '_' + str(anchorBin * resolution) + '-' + str((anchorBin + 1) * resolution - 1) + '_region_chr' + REGION_CHROMOSOME + '_' + str(regionStartBin * resolution) + '-' + str(regionEndBin * resolution - 1)
 
 	# Return
 	return matrix, anchorBin, regionStartBin, regionEndBin, resolution, FIGURE
@@ -141,11 +141,11 @@ def _getChrmLen(i, chromosomeStarts, binNumber):
 # Plot 3C profile
 def plot3CProfile(matrix, ANCHOR_CHROMOSOME, anchorBin, REGION_CHROMOSOME, regionStartBin, regionEndBin, resolution, FIGURE, YMAX):
 	# Plot anchor
-	anchor_label = "Anchor bin (chr" + ANCHOR_CHROMOSOME + ": " + str(anchorBin * resolution) + "-" + str((anchorBin + 1) * resolution - 1) + ")"
+	anchor_label = 'Anchor bin (chr' + ANCHOR_CHROMOSOME + ': ' + str(anchorBin * resolution) + '-' + str((anchorBin + 1) * resolution - 1) + ')'
 	if ANCHOR_CHROMOSOME == REGION_CHROMOSOME:
 		plt.axvspan(anchorBin * resolution, (anchorBin + 1) * resolution, facecolor = 'grey', alpha = 0.8, label = anchor_label)
 	else:
-		plt.axvspan(None, None, facecolor = "none", label = anchor_label)
+		plt.axvspan(None, None, facecolor = 'none', label = anchor_label)
 	plt.legend(bbox_to_anchor = (1, 1), loc = 'lower right', fontsize = 'small')
 	
 	# Plot 3C profile
@@ -156,17 +156,17 @@ def plot3CProfile(matrix, ANCHOR_CHROMOSOME, anchorBin, REGION_CHROMOSOME, regio
 	plt.xlim((regionStartBin - 1) * resolution, regionEndBin * resolution)
 	if YMAX != None:
 		plt.ylim(0, YMAX)
-		FIGURE += "_ymax" + str(YMAX)
-	FIGURE += ".png"
+		FIGURE += '_ymax' + str(YMAX)
+	FIGURE += '.png'
 
 	# Plot x-axis and y-axis titles
-	plt.xlabel("Coordinates on chr%s" % REGION_CHROMOSOME)
-	plt.ylabel("Contact probability")
+	plt.xlabel('Coordinates on chr%s' % REGION_CHROMOSOME)
+	plt.ylabel('Contact probability')
 
 	# Save figure
 	plt.savefig(FIGURE, dpi = 500)
 	plt.close()
 
 #Execute main function
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()

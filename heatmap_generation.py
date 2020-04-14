@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-"""
+'''
 <Description>
 This script generates a Hi-C/3C-seq contact heatmap from the genome-wide/chromosome-wide contact probability matrices.
 
@@ -32,7 +32,7 @@ $ python 01_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb
 
 <Output>
 Genome-wide/chromosome-wide contact probability heatmaps in PNG format.
-"""
+'''
 
 import sys
 import argparse
@@ -59,7 +59,7 @@ def parseInput():
 	parser.add_argument('--genomeHDF5', dest = 'genomeHDF5', default = None, help = 'Input HDF5 file of Genome-wide contact probability matrix. [Required when --plotGenome is speficied]')
 	parser.add_argument('--chromosomeHDF5', dest = 'chromosomeHDF5', default = None, help = 'Input HDF5 file of chromosome-wide contact probability matrices. [Required when --plotChromosome is specified]')
 	parser.add_argument('--plotGenome', dest = 'plotGenome', action='store_true', help = 'Plot genome-wide contact probability heatmap. [Optional]')
-	parser.add_argument('--plotChromosome', dest = 'plotChromosome', nargs='+', default = 0, help = 'Plot heatmap of one or more chromosomes. For single chromosome-wide heatmap, chromosome number is required (e.g. use "--plotChromosome 1"). For heatmap of multiple chromosomes, list of chromosomes is required where chromosome numbers are separared by space (e.g. use "--plotChromosome 1 2" to plot a heatmap of chromosome 1 and 2). [Optional]')
+	parser.add_argument('--plotChromosome', dest = 'plotChromosome', nargs='+', default = 0, help = 'Plot heatmap of one or more chromosomes. For single chromosome-wide heatmap, chromosome number is required (e.g. use "--plotChromosome 1" to plot a heatmap of chromosome 1). For heatmap of multiple chromosomes, list of chromosomes is required where chromosome numbers are separared by space (e.g. use "--plotChromosome 1 2" to plot a heatmap of chromosome 1 and 2). [Optional]')
 	parser.add_argument('--colorMap', dest = 'colorMap', default = 'hot_r', help = 'Built-in colormaps in Matplotlib package (https://matplotlib.org/3.1.1/gallery/color/colormap_reference.html) [Optional; Default = hot_r]')
 	parser.add_argument('--vmin', dest = 'vmin', type = float, default = None, help = 'minimum value of color scale. [Optional; Default = None]')
 	parser.add_argument('--vmax', dest = 'vmax', type = float, default = None, help = 'maximum value of color scale. [Optional; Default = None]')
@@ -83,24 +83,24 @@ def parseInput():
 
 	# Check arguments
 	if GENOME_HDF5 == None and  PLOT_GENOME:
-		print "[Error] --genomeHDF5 is required when --plotGenome is specified."
+		print '[Error] --genomeHDF5 is required when --plotGenome is specified.'
 		sys.exit(1)
 	if CHROMOSOME_HDF5 == None and PLOT_CHROMOSOME:
-		print "[Error] --chromosomeHDF5 is required when --plotChromosome is specified."
+		print '[Error] --chromosomeHDF5 is required when --plotChromosome is specified.'
 		sys.exit(1)
 
 	# Name output figure
-	tmp = "_" + COLORMAP
+	tmp = '_' + COLORMAP
 	if VMIN != None:
-		tmp += "_vmin" + str(VMIN)
+		tmp += '_vmin' + str(VMIN)
 	if VMAX != None:
-		tmp += "_vmax" + str(VMAX)
+		tmp += '_vmax' + str(VMAX)
 	if CHROMOSOME_GRID:
-		tmp += "_grid"
-	HEATMAP_GENOME = GENOME_HDF5.split("/")[-1][:-5] + tmp + ".png"
-	HEATMAP_CHROMOSOMES = ""
+		tmp += '_grid'
+	HEATMAP_GENOME = GENOME_HDF5.split('/')[-1][:-5] + tmp + '.png'
+	HEATMAP_CHROMOSOMES = ''
 	if PLOT_CHROMOSOME:
-		HEATMAP_CHROMOSOMES = CHROMOSOME_HDF5.split("/")[-1][:-5] + "_chr" + "_chr".join(PLOT_CHROMOSOME) + tmp + ".png"
+		HEATMAP_CHROMOSOMES = CHROMOSOME_HDF5.split('/')[-1][:-5] + '_chr' + '_chr'.join(PLOT_CHROMOSOME) + tmp + '.png'
 
 	# Return
 	return GENOME_HDF5, CHROMOSOME_HDF5, PLOT_GENOME, PLOT_CHROMOSOME, COLORMAP, VMIN, VMAX, CHROMOSOME_GRID, HEATMAP_GENOME, HEATMAP_CHROMOSOMES
@@ -109,9 +109,9 @@ def parseInput():
 def getGenomeMatrix(GENOME_HDF5):
 	# Read hdf5
 	f = h5dict.h5dict(GENOME_HDF5, mode='r')
-	matrix = f["heatmap"]
-	chromosomeStarts = f["chromosomeStarts"]
-	binNumber = f["binNumber"]
+	matrix = f['heatmap']
+	chromosomeStarts = f['chromosomeStarts']
+	binNumber = f['binNumber']
 
 	# Get grid location and chromosome labels
 	grids = list(chromosomeStarts) + [binNumber]
@@ -124,10 +124,10 @@ def getGenomeMatrix(GENOME_HDF5):
 # Get chromosome-wide matrix
 def getChromosomesMatrix(CHROMOSOME_HDF5, PLOT_CHROMOSOME):
 	# Read hdf5
-        f = h5dict.h5dict(CHROMOSOME_HDF5, mode="r")
-        genomeIdxToLabel = f["genomeIdxToLabel"]
-        chromosomeStarts = f["chromosomeStarts"]
-        binNumber = f["binNumber"]
+        f = h5dict.h5dict(CHROMOSOME_HDF5, mode='r')
+        genomeIdxToLabel = f['genomeIdxToLabel']
+        chromosomeStarts = f['chromosomeStarts']
+        binNumber = f['binNumber']
 
 	# Get grid location and chromosome labels
         chrmIdx = []
@@ -148,7 +148,7 @@ def getChromosomesMatrix(CHROMOSOME_HDF5, PLOT_CHROMOSOME):
         for i in chrmIdx:
                 m = []
                 for j in chrmIdx:
-                        key = str(i) + " " + str(j)
+                        key = str(i) + ' ' + str(j)
                         m.append(f[key])
                 slices.append(np.concatenate(m,axis=1))
         matrix = np.concatenate(slices,axis=0)
@@ -160,7 +160,7 @@ def getChromosomesMatrix(CHROMOSOME_HDF5, PLOT_CHROMOSOME):
 def plotHeatmap(matrix, grids, chrmLabels, HEATMAP, COLORMAP, VMIN, VMAX, CHROMOSOME_GRID):
 	# Plot heatmap
 	im = plt.imshow(np.log2(matrix), cmap = COLORMAP, vmin = VMIN, vmax = VMAX)
-	plt.colorbar(im, label = "Contact probability (log2)")
+	plt.colorbar(im, label = 'Contact probability (log2)')
 	
 	# Check if more than one chromosomes are plotted in heatmap and if grid option is selected
         if len(chrmLabels) > 1 and CHROMOSOME_GRID:
@@ -175,10 +175,10 @@ def plotHeatmap(matrix, grids, chrmLabels, HEATMAP, COLORMAP, VMIN, VMAX, CHROMO
 			for j in range(len(chrmLabels)):
 				start2 = grids[j]
 				end2 = grids[j + 1]
-	                        plt.axhline(start - 0.5, xmin = (start2 + 15.0) / grids[-1], xmax = (end2 - 15.0) / grids[-1], color = "k", linewidth = 1)
-        	                plt.axvline(start - 0.5, ymin = 1 - (start2 + 15.0) / grids[-1], ymax = 1 - (end2 - 15.0) / grids[-1], color = "k", linewidth = 1)
-			plt.axhline(grids[-1] - 0.5, xmin = (start + 15.0) / grids[-1], xmax = (end - 15.0) / grids[-1], color = "k", linewidth = 1)
-                        plt.axvline(grids[-1] - 0.5, ymin = 1 - (start + 15.0) / grids[-1], ymax = 1 - (end - 15.0) / grids[-1], color = "k", linewidth = 1)
+	                        plt.axhline(start - 0.5, xmin = (start2 + 15.0) / grids[-1], xmax = (end2 - 15.0) / grids[-1], color = 'k', linewidth = 1)
+        	                plt.axvline(start - 0.5, ymin = 1 - (start2 + 15.0) / grids[-1], ymax = 1 - (end2 - 15.0) / grids[-1], color = 'k', linewidth = 1)
+			plt.axhline(grids[-1] - 0.5, xmin = (start + 15.0) / grids[-1], xmax = (end - 15.0) / grids[-1], color = 'k', linewidth = 1)
+                        plt.axvline(grids[-1] - 0.5, ymin = 1 - (start + 15.0) / grids[-1], ymax = 1 - (end - 15.0) / grids[-1], color = 'k', linewidth = 1)
                         xticks.append((start - 0.5 + end - 0.5) / 2)
                         yticks.append((start - 0.5 + end - 0.5) / 2)
 		
@@ -187,17 +187,17 @@ def plotHeatmap(matrix, grids, chrmLabels, HEATMAP, COLORMAP, VMIN, VMAX, CHROMO
                 plt.yticks(yticks, chrmLabels)
 
 		# Set x-axis and y-axis titles
-		plt.xlabel("Chromosome")
-		plt.ylabel("Chromosome")
+		plt.xlabel('Chromosome')
+		plt.ylabel('Chromosome')
         else:
 		# Set x-axis and y-axis titles for heatmap with no grid
-                plt.xlabel("Genomic bin number")
-                plt.ylabel("Genomic bin number")
+                plt.xlabel('Genomic bin number')
+                plt.ylabel('Genomic bin number')
 	
 	# Set label location
 	plt.gca().xaxis.set_tick_params(label1On = False, label2On = True, tick1On = False, tick2On = True)
         plt.gca().yaxis.set_tick_params(label1On = True, label2On = False, tick1On = True, tick2On = False)
-	plt.gca().xaxis.set_label_position("top")
+	plt.gca().xaxis.set_label_position('top')
 
 	# Remove figure frame
 	for spine in plt.gca().spines.values():
@@ -208,5 +208,5 @@ def plotHeatmap(matrix, grids, chrmLabels, HEATMAP, COLORMAP, VMIN, VMAX, CHROMO
 	plt.close()
 
 # Execute main function
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()
