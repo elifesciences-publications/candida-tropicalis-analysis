@@ -8,27 +8,29 @@ This script generates a Hi-C/3C-seq contact heatmap from the genome-wide/chromos
 The hdf5 file of genome-wide and/or chromosome-wide contact probability matrices.
 
 <Usage>
-python heatmap_generation.py [-h] [--genomeHDF5 GENOMEHDF5]
-                             [--chromosomeHDF5 CHROMOSOMEHDF5] [--plotGenome]
-                             [--plotChromosome PLOTCHROMOSOME [PLOTCHROMOSOME ...]]
-                             [--colorMap COLORMAP] [--vmin VMIN] [--vmax VMAX]
-                             [--chromosomeGrid CHROMOSOMEGRID]
+python 02_heatmap_generation.py [-h] [--genomeHDF5 GENOMEHDF5]
+                                [--chromosomeHDF5 CHROMOSOMEHDF5]
+                                [--plotGenome]
+                                [--plotChromosome PLOTCHROMOSOME [PLOTCHROMOSOME ...]]
+                                [--colorMap COLORMAP] [--vmin VMIN]
+                                [--vmax VMAX]
+                                [--chromosomeGrid CHROMOSOMEGRID]
 
 <Examples>
 1) Plotting a genome-wide heatmap
-$ python 01_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --plotGenome
+$ python 02_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --plotGenome
 
 2) Plotting a chromosome-wide heatmap
-$ python 01_heatmap_generation.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotChromosome 1
+$ python 02_heatmap_generation.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotChromosome 1
 
 3) Plotting a heatmap of more than one chromosomes
-$ python 01_heatmap_generation.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotChromosome 1 2
+$ python 02_heatmap_generation.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotChromosome 1 2
 
 4) Plotting both genome-wide and chromosome-wide heatmaps at the same time
-$ python 01_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotGenome --plotChromosome 1 2
+$ python 02_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotGenome --plotChromosome 1 2
 
 5) Customizing heatmap
-$ python 01_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotGenome --plotChromosome 1 2 --colorMap Blues --vmin -12 --vmax -5
+$ python 02_heatmap_generation.py --genomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb.hdf5 --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotGenome --plotChromosome 1 2 --colorMap Blues --vmin -12 --vmax -5
 
 <Output>
 Genome-wide/chromosome-wide contact probability heatmaps in PNG format.

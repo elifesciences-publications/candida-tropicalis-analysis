@@ -8,17 +8,16 @@ This script performs aggregate signal analysis of contact probability matrix and
 The hdf5 file of chromosome-wide contact probability matrices.
 
 <Usage>
-python aggregate_heatmap_at_centromere_telomere.py [-h] --chromosomeHDF5
-                                                   CHROMOSOMEHDF5
-                                                   [--plotTelomere PLOTTELOMERE]
-                                                   [--plotCentromere PLOTCENTROMERE]
-                                                   [--centromereBed CENTROMEREBED]
-                                                   [--colorMap COLORMAP]
-                                                   [--vmin VMIN] [--vmax VMAX]
+python 03_aggregate_signal_heatmap.py [-h] --chromosomeHDF5 CHROMOSOMEHDF5
+                                      [--plotTelomere PLOTTELOMERE]
+                                      [--plotCentromere PLOTCENTROMERE]
+                                      [--centromereBed CENTROMEREBED]
+                                      [--colorMap COLORMAP] [--vmin VMIN]
+                                      [--vmax VMAX]
 
 <Examples>
 1) Plotting heatmap of mean contact probabilities (bin size = 2 kb) in 50 kb upstream and 50 kb downsteam regions surrounding centromere-centromere interactions (50 kb upstream + 2 kb centromere mid bin + 50 kb downstream = total 102 kb in 51 bins)
-$ python aggregate_heatmap_at_centromere_telomere.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotCentromere 50000 --centromereBed centromeres.bed
+$ python 03_aggregate_signal_heatmap.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotCentromere 50000 --centromereBed centromeres.bed
 
 For Candida tropicalis, the centromeres.bed includes:
 chr1	466066	475754
@@ -30,10 +29,10 @@ chr6	308570	331012
 chrR	855697	865834
 
 2) Plotting heatmap of mean contact probabilities (bin size = 2 kb) in 100 kb region adjacent to telomere-telomere interactions (100 kb upstream/downstream + 2 kb telomere end bin = 102 kb in 51 bins)
-$ python aggregate_heatmap_at_centromere_telomere.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotTelomere 100000
+$ python 03_aggregate_signal_heatmap.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotTelomere 100000
 
 3) Customizing output heatmap
-$ python aggregate_heatmap_at_centromere_telomere.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotCentromere 50000 --centromereBed centromeres.bed --colorMap Blues --vmin -12 --vmax -7
+$ python 03_aggregate_signal_heatmap.py --chromosomeHDF5 ../test_mapped_reads_heatmap_2kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --plotCentromere 50000 --centromereBed centromeres.bed --colorMap Blues --vmin -12 --vmax -7
 
 <Output>
 Heatmap of mean contact probabilities surrounding all centromere-centromere or telomere-telomere interactions in PNG format.

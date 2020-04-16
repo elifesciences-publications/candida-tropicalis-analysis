@@ -8,25 +8,26 @@ This script generates histogram of non-zero interchromosomal or intrachromosomal
 The hdf5 file of chromosome-wide contact probability matrices.
 
 <Usage>
-python histogram_telomeric_interactions.py [-h] --chromosomeHDF5
-                                           CHROMOSOMEHDF5 [--interChromosomal]
-                                           [--intraChromosomal]
-                                           [--longRange LONGRANGE]
-                                           [--distanceTelomere DISTANCETELOMERE]
-                                           [--xmax XMAX] [--ymax YMAX]
+python 04_04_histogram_telomeric_interactions.py [-h] --chromosomeHDF5
+                                              CHROMOSOMEHDF5
+                                              [--interChromosomal]
+                                              [--intraChromosomal]
+                                              [--longRange LONGRANGE]
+                                              [--distanceTelomere DISTANCETELOMERE]
+                                              [--xmax XMAX] [--ymax YMAX]
 
 <Examples>
 1) Plotting histogram of non-zero interchromosomal interactions (with mean value) together with mean contact probability of intercrhomosomal telomeric interactions.
-$ python histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --interChromosomal
+$ python 04_histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --interChromosomal
 
 2) Plotting histogram of non-zero intrachromosomal long-range interactions (with mean value) together with mean contact probability of intracrhomosomal telomeric interactions.
-$ python histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --intraChromosomal
+$ python 04_histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --intraChromosomal
 
 3) Changing the definitions of long-range interactions and intrachromosomal telomeric interactions.
-$ python histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --intraChromosomal --longRange 200000 --distanceTelomere 20000
+$ python 04_histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --intraChromosomal --longRange 200000 --distanceTelomere 20000
 
 4) Customizing figure.
-$ python histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --interChromosomal --xmax 0.04 --ymax 70000
+$ python 04_histogram_telomeric_interactions.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --interChromosomal --xmax 0.04 --ymax 70000
 
 <Output>
 Histogram of non-zero interchromosomal or intrachromosomal long-range interactions together with mean contact probabilities of bulk chromatin as well as intercrhomosomal or intrachromosomal telomeric interactions in PNG format.

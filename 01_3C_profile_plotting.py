@@ -8,26 +8,26 @@ This script plots the 3C profile anchored on a specified genomic bin.
 The hdf5 file of chromosome-wide contact probability matrices.
 
 <Usage>
-python 3C_profile_plotting.py [-h] --chromosomeHDF5 CHROMOSOMEHDF5
-                              --anchorChromosome ANCHORCHROMOSOME --anchor
-                              ANCHOR [--regionChromosome REGIONCHROMOSOME]
-                              [--regionStart REGIONSTART]
-                              [--regionEnd REGIONEND] [--ymax YMAX]
+python 01_3C_profile_plotting.py [-h] --chromosomeHDF5 CHROMOSOMEHDF5
+                                 --anchorChromosome ANCHORCHROMOSOME --anchor
+                                 ANCHOR [--regionChromosome REGIONCHROMOSOME]
+                                 [--regionStart REGIONSTART]
+                                 [--regionEnd REGIONEND] [--ymax YMAX]
 
 <Examples>
 1) Plotting the 3C profile of a bin (chr1: 10000-19999) on the entire chromosome
-$ python 02_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --anchorChromosome 1 --anchor 10000
+$ python 01_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNormProb_byChr.hdf5 --anchorChromosome 1 --anchor 10000
 
 2) Plotting the 3C profile of a bin (chr1: 10000-19999) in a specified region (chr1: 0-99999)
-$ python 02_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
+$ python 01_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
 Prob_byChr.hdf5 --anchorChromosome 1 --anchor 10000 --regionStart 0 --regionEnd 99999
 
 3) Plotting the 3C profile of a bin (chr1: 10000-19999) on another chromosome
-$ python 02_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
+$ python 01_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
 Prob_byChr.hdf5 --anchorChromosome 1 --anchor 10000 --regionChromosome 2 --regionStart 0 --regionEnd 99999
 
 4) Customizing figure
-$ python 02_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
+$ python 01_3C_profile_plotting.py --chromosomeHDF5 ../test_mapped_reads_heatmap_10kb_N0.5_noTruncTrans_IC_readNorm
 Prob_byChr.hdf5 --anchorChromosome 1 --anchor 10000 --regionChromosome 2 --regionStart 0 --regionEnd 99999 --ymax 0.01
 
 <Output>
