@@ -1,3 +1,4 @@
+### This code is associated with the paper from Guin et al., "Spatial inter-centromeric interactions facilitated the emergence of evolutionary new centromeres". eLife, 2020. http://dx.doi.org/10.7554/eLife.58556
 # Analysis of _Candida tropicalis_ 3C-seq data
 This repository includes codes used for analyzing 3C-seq data of _Candida tropicalis_ type strain MYA-3404. Manuscript available at https://www.biorxiv.org/content/10.1101/2020.02.07.938175v1. The codes can be applied for Hi-C/3C-seq data of other organisms as well.
 ### Dependencies
